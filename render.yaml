@@ -10,3 +10,5 @@ services:
     envVars:
       - key: QUECOMO_ZONA_HORARIA
         value: America/Hermosillo
+      - key: PYTHON_VERSION
+        value: 3.13.0

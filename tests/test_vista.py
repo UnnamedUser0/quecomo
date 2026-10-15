@@ -10,6 +10,7 @@ from quecomo.dominio.excepciones import (
 from quecomo.presentacion.interfaz import construir_interfaz
 from quecomo.presentacion.vista import HORARIO_AHORA, TODAS, Vista, estrellas
 
+
 @pytest.fixture
 def vista(app_demo):
     return Vista(app_demo)
@@ -370,13 +371,13 @@ def test_buscar_sin_resultados(vista):
     assert tabla.empty
     assert "No hay restaurantes que cumplan todos los criterios" in resumen
 
-def test_lineas_evaluaciones_sin_evaluaciones(vista):
+def test_lineas_evaluaciones_sin_evaluaciones(vista, monkeypatch):
     restaurante = vista.app.restaurantes.obtener(1)
+    monkeypatch.setattr(vista.app.evaluaciones, "obtener_por_restaurante", lambda _rid: [])
 
-    evaluaciones = vista.app.evaluaciones.obtener_por_restaurante(
-        restaurante.id
-    )
-    evaluaciones_originales = evaluaciones
+    lineas = vista._lineas_evaluaciones(restaurante)
+
+    assert any("Aún no hay evaluaciones" in linea for linea in lineas)
 
 def test_comparar_cuando_busqueda_no_devuelve_resultados(vista, monkeypatch):
     monkeypatch.setattr(
@@ -414,10 +415,6 @@ def test_cancelar_transaccion_desde_vista(vista):
     assert mensaje.startswith("✅")
     assert "cancelado" in mensaje.lower()
     
-    from quecomo.dominio.excepciones import (
-    EvaluacionNoPermitida,
-    MotivoRechazo,
-)
 
 def test_mensaje_rechazo_para_error_que_no_es_evaluacion(vista):
     error = ValueError("Error de prueba")
