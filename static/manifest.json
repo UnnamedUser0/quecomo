@@ -1,0 +1,26 @@
+{
+  "name": "¿Qué Como? - App de Restaurantes",
+  "short_name": "Qué Como",
+  "description": "Descubre, compara y evalúa restaurantes con evaluaciones respaldadas por consumos reales.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#12203A",
+  "theme_color": "#12203A",
+  "icons": [
+    {
+      "src": "/static/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/static/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["food", "lifestyle", "utilities"]
+}
